@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090b">
+  <title>CINEBOX — Thế giới điện ảnh</title>
+  <style>
+    :root{--bg:#09090b;--panel:#151519;--muted:#a1a1aa;--red:#e50914;--line:#29292f}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif}
+    button,input{font:inherit}button{cursor:pointer}.topbar{height:72px;padding:0 5.5%;display:flex;align-items:center;gap:34px;position:sticky;top:0;z-index:10;background:rgba(9,9,11,.94);backdrop-filter:blur(12px);border-bottom:1px solid #ffffff0d}
+    .logo{font-size:25px;font-weight:900;letter-spacing:1px;color:var(--red);white-space:nowrap}.nav{display:flex;gap:22px}.nav a{color:#ddd;text-decoration:none;font-size:14px}.nav a:hover{color:#fff}
+    .search{margin-left:auto;display:flex;align-items:center;background:#202026;border:1px solid #34343b;border-radius:22px;padding:0 13px;width:min(270px,35vw)}.search input{width:100%;padding:10px 8px;background:transparent;border:0;outline:0;color:#fff}.search span{color:#aaa}
+    .hero{min-height:500px;padding:75px 7% 55px;display:flex;align-items:center;background:linear-gradient(90deg,#09090b 0%,#09090bd9 42%,#09090b20 100%),linear-gradient(0deg,#09090b 0%,transparent 45%),url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1800&q=85') center/cover}
+    .hero-content{max-width:590px}.eyebrow{color:#ff5961;font-size:12px;font-weight:bold;letter-spacing:2px}.hero h1{font-size:clamp(38px,6vw,68px);margin:14px 0 12px;line-height:1.02}.hero p{color:#d4d4d8;line-height:1.7;max-width:520px}.actions{display:flex;gap:12px;margin-top:25px;flex-wrap:wrap}
+    .btn{border:0;border-radius:7px;padding:12px 20px;font-weight:bold}.primary{background:var(--red);color:#fff}.secondary{background:#ffffff20;color:#fff;border:1px solid #ffffff35}.btn:hover{filter:brightness(1.15)}
+    main{padding:10px 5.5% 55px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin:24px 0}.toolbar h2{font-size:23px;margin:0}.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{border:1px solid #35353c;background:#17171c;color:#ddd;padding:8px 13px;border-radius:20px;font-size:12px}.filter.active,.filter:hover{background:var(--red);border-color:var(--red);color:white}
+    .section-title{font-size:21px;margin:34px 0 16px}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}.movie{min-width:0;cursor:pointer;transition:transform .2s}.movie:hover{transform:translateY(-5px)}.poster{height:245px;border-radius:10px;overflow:hidden;position:relative;background:#222}.poster img{width:100%;height:100%;object-fit:cover;display:block}.poster:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,#0009)}.rating{position:absolute;z-index:1;top:9px;left:9px;background:#000b;padding:5px 7px;border-radius:5px;font-size:11px}.movie-info{padding:10px 2px}.movie-info h3{font-size:14px;margin:0 0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.movie-info p{font-size:12px;color:var(--muted);margin:0}.empty{color:var(--muted);padding:35px 0}
+    .modal{display:none;position:fixed;inset:0;z-index:30;background:#000c;overflow:auto;padding:30px 15px}.modal.show{display:flex;align-items:center;justify-content:center}.modal-card{width:min(850px,100%);background:#17171c;border:1px solid #333;border-radius:14px;overflow:hidden;position:relative}.close{position:absolute;right:14px;top:12px;z-index:3;border:0;border-radius:50%;width:35px;height:35px;background:#000b;color:white;font-size:20px}.detail-layout{display:grid;grid-template-columns:260px 1fr;gap:25px;padding:28px}.detail-layout img{width:100%;height:350px;object-fit:cover;border-radius:9px}.detail h2{font-size:30px;margin:12px 0}.detail p{color:#c4c4cc;line-height:1.65}.meta{font-size:13px;color:#aaa}.player{padding:25px}.player video{width:100%;max-height:65vh;background:#000;border-radius:8px}.player h2{margin-top:0}.note{font-size:12px;color:#a1a1aa;line-height:1.5}
+    footer{border-top:1px solid var(--line);padding:25px 5.5%;color:#888;font-size:12px;line-height:1.7}
+    @media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.poster{height:220px}.hero{min-height:440px}}
+    @media(max-width:600px){.topbar{height:auto;min-height:64px;padding:12px 4%;gap:15px;flex-wrap:wrap}.logo{font-size:21px}.nav{order:3;width:100%;justify-content:space-between;gap:10px}.nav a{font-size:12px}.search{width:auto;flex:1}.hero{min-height:420px;padding:55px 6%}.hero p{font-size:14px}main{padding:5px 4% 40px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.poster{height:220px}.detail-layout{grid-template-columns:1fr;padding:20px}.detail-layout img{height:260px;width:180px}.detail h2{font-size:24px}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">CINEBOX</div>
+    <nav class="nav"><a href="#home">Trang chủ</a><a href="#catalog">Phim</a><a href="#favorites">Yêu thích</a></nav>
+    <label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Tìm tên phim..."></label>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="eyebrow">ĐIỆN ẢNH • GIẢI TRÍ • KHÁM PHÁ</div>
+      <h1>Thế giới phim<br>trong tầm tay.</h1>
+      <p>Khám phá những câu chuyện hấp dẫn, chọn bộ phim yêu thích và bắt đầu hành trình giải trí của bạn.</p>
+      <div class="actions"><button class="btn primary" onclick="openMovie(1)">▶ Khám phá ngay</button><button class="btn secondary" onclick="document.querySelector('#catalog').scrollIntoView()">Xem danh sách</button></div>
+    </div>
+  </section>
+
+  <main id="catalog">
+    <div class="toolbar"><h2>Khám phá phim</h2><div class="filters" id="filters"></div></div>
+    <h3 class="section-title" id="listTitle">Phim nổi bật</h3>
+    <div class="grid" id="movieGrid"></div>
+    <section id="favorites"><h3 class="section-title">♥ Danh sách yêu thích</h3><div class="grid" id="favoriteGrid"></div></section>
+  </main>
+
+  <div class="modal" id="detailModal" onclick="backdropClose(event,'detailModal')">
+    <div class="modal-card"><button class="close" onclick="closeModal('detailModal')">×</button><div id="detailContent"></div></div>
+  </div>
+  <div class="modal" id="playerModal" onclick="backdropClose(event,'playerModal')">
+    <div class="modal-card"><button class="close" onclick="closeModal('playerModal')">×</button><div class="player"><h2 id="playerTitle">Đang phát</h2><video id="videoPlayer" controls playsinline><source src="" type="video/mp4">Trình duyệt không hỗ trợ video.</video><p class="note">Video minh họa mẫu. Khi xuất bản, hãy thay đường dẫn bằng video bạn có quyền sử dụng hoặc nội dung được cấp phép.</p></div></div>
+  </div>
+
+  <footer>CINEBOX — Website giới thiệu và xem video minh họa. Nội dung phim trong danh sách là dữ liệu mẫu. Hãy chỉ đăng tải hoặc nhúng video mà bạn sở hữu hay được phép sử dụng.</footer>
+
+  <script>
+    const demoVideo = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+    const movies = [
+      {id:1,title:"Hành trình kỳ diệu",genre:"Phiêu lưu",year:2025,rating:"8.8",duration:"1 giờ 52 phút",desc:"Một chuyến đi bất ngờ mở ra những bí mật và tình bạn không thể quên.",img:"https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=700&q=80"},
+      {id:2,title:"Thành phố về đêm",genre:"Hành động",year:2024,rating:"8.5",duration:"2 giờ 05 phút",desc:"Giữa thành phố không ngủ, một câu chuyện gay cấn dần được hé lộ.",img:"https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=700&q=80"},
+      {id:3,title:"Mùa hè năm ấy",genre:"Tình cảm",year:2025,rating:"8.2",duration:"1 giờ 45 phút",desc:"Những kỷ niệm tuổi trẻ, tình bạn và lựa chọn đầu đời.",img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80"},
+      {id:4,title:"Bí ẩn căn nhà cổ",genre:"Kinh dị",year:2023,rating:"7.9",duration:"1 giờ 38 phút",desc:"Một căn nhà cũ cất giữ câu chuyện mà không ai dám nhắc đến.",img:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80"},
+      {id:5,title:"Vương quốc sắc màu",genre:"Hoạt hình",year:2024,rating:"9.0",duration:"1 giờ 30 phút",desc:"Cuộc phiêu lưu vui nhộn về lòng dũng cảm và sự sẻ chia.",img:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=700&q=80"},
+      {id:6,title:"Đường đua tốc độ",genre:"Hành động",year:2022,rating:"8.1",duration:"1 giờ 56 phút",desc:"Những thử thách liên tiếp trên hành trình chinh phục giới hạn.",img:"https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=700&q=80"},
+      {id:7,title:"Ngày ta gặp lại",genre:"Tình cảm",year:2023,rating:"8.4",duration:"1 giờ 49 phút",desc:"Một cuộc gặp gỡ tình cờ khiến quá khứ và hiện tại giao nhau.",img:"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=700&q=80"},
+      {id:8,title:"Thế giới đại dương",genre:"Phiêu lưu",year:2025,rating:"8.7",duration:"1 giờ 42 phút",desc:"Khám phá vẻ đẹp kỳ thú của đại dương xanh rộng lớn.",img:"https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=700&q=80"}
+    ];
+    let activeGenre="Tất cả", searchTerm="";
+    let favorites=JSON.parse(localStorage.getItem("cinebox-favorites")||"[]");
+    const genres=["Tất cả",...new Set(movies.map(m=>m.genre))];
+    const filters=document.getElementById("filters");
+    genres.forEach(g=>{const b=document.createElement("button");b.className="filter"+(g===activeGenre?" active":"");b.textContent=g;b.onclick=()=>{activeGenre=g;document.querySelectorAll(".filter").forEach(x=>x.classList.toggle("active",x.textContent===g));render()};filters.appendChild(b)});
+    document.getElementById("searchInput").addEventListener("input",e=>{searchTerm=e.target.value.toLowerCase().trim();render()});
+    function card(m){return `<article class="movie" onclick="openMovie(${m.id})"><div class="poster"><img src="${m.img}" alt="Poster ${m.title}" loading="lazy" onerror="this.src='https://placehold.co/500x750/202026/ffffff?text=CINEBOX'"><span class="rating">★ ${m.rating}</span></div><div class="movie-info"><h3>${m.title}</h3><p>${m.year} · ${m.genre}</p></div></article>`}
+    function render(){
+      const list=movies.filter(m=>(activeGenre==="Tất cả"||m.genre===activeGenre)&&m.title.toLowerCase().includes(searchTerm));
+      document.getElementById("listTitle").textContent=searchTerm?"Kết quả tìm kiếm":activeGenre==="Tất cả"?"Phim nổi bật":`Phim ${activeGenre}`;
+      document.getElementById("movieGrid").innerHTML=list.length?list.map(card).join(""):'<p class="empty">Không tìm thấy phim phù hợp.</p>';
+      const fav=movies.filter(m=>favorites.includes(m.id));
+      document.getElementById("favoriteGrid").innerHTML=fav.length?fav.map(card).join(""):'<p class="empty">Bạn chưa thêm phim yêu thích.</p>';
+    }
+    function openMovie(id){
+      const m=movies.find(x=>x.id===id);if(!m)return;
+      document.getElementById("detailContent").innerHTML=`<div class="detail-layout"><img src="${m.img}" alt="Poster ${m.title}"><div class="detail"><div class="eyebrow">CINEBOX ORIGINAL</div><h2>${m.title}</h2><div class="meta">★ ${m.rating} &nbsp; • &nbsp; ${m.year} &nbsp; • &nbsp; ${m.duration} &nbsp; • &nbsp; ${m.genre}</div><p>${m.desc}</p><div class="actions"><button class="btn primary" onclick="playMovie(${m.id})">▶ Xem video</button><button class="btn secondary" onclick="toggleFavorite(${m.id})">${favorites.includes(m.id)?"♥ Đã yêu thích":"♡ Thêm yêu thích"}</button></div></div></div>`;
+      document.getElementById("detailModal").classList.add("show");
+    }
+    function toggleFavorite(id){favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem("cinebox-favorites",JSON.stringify(favorites));openMovie(id);render()}
+    function playMovie(id){const m=movies.find(x=>x.id===id);closeModal("detailModal");document.getElementById("playerTitle").textContent=m.title;const v=document.getElementById("videoPlayer");v.querySelector("source").src=demoVideo;v.load();document.getElementById("playerModal").classList.add("show")}
+    function closeModal(id){document.getElementById(id).classList.remove("show");if(id==="playerModal")document.getElementById("videoPlayer").pause()}
+    function backdropClose(e,id){if(e.target.id===id)closeModal(id)}
+    document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal("detailModal");closeModal("playerModal")}});
+    render();
+  </script>
+</body>
+</html>
